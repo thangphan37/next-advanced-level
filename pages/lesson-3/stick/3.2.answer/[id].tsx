@@ -4,7 +4,7 @@ function App({post} : {
   post: Post
 }) {
   return <div>
-    <p>{post.title}</p>
+    <p>{post?.title}</p>
   </div>
 }
 
