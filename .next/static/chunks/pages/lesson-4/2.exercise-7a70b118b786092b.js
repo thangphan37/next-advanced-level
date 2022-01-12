@@ -1,1 +1,0 @@
-(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[407],{189:function(n,u,e){(window.__NEXT_P=window.__NEXT_P||[]).push(["/lesson-4/2.exercise",function(){return e(5534)}])},5534:function(n,u,e){"use strict";e.r(u);var r=e(5893);u.default=function(){return(0,r.jsx)("div",{})}}},function(n){n.O(0,[774,888,179],(function(){return u=189,n(n.s=u);var u}));var u=n.O();_N_E=u}]);
