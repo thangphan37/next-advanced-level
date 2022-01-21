@@ -6,15 +6,22 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   const {id} = req.query as {[key: string]: string}
+  await prisma.character.update({
+    where: {
+      id,
+    },
+    data: {
+      profile: {
+        delete: true,
+      },
+    },
+  })
   await prisma.character.delete({
     where: {
-      id 
+      id,
     },
-    include: {
-      profile: true
-    }
   })
   res.status(200).json({
-    message: `You deleted ${id} successful!`
+    message: `You deleted ${id} successful!`,
   })
 }

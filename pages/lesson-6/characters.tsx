@@ -1,5 +1,6 @@
 import * as React from 'react'
 import type {Character, Profile} from '@prisma/client'
+import Link from 'next/link'
 
 type CharacterInfo = Character & {
 	profile: Profile
@@ -25,23 +26,23 @@ export default function List() {
 		await fetch(`/api/lesson-6/delete?id=${character.id}`, {
 			method: 'DELETE'
 		})
-		// await fetchCharacters()
+		await fetchCharacters()
 	}
 
   return (
     <div className="max-w-sm mx-auto mt-2">
-      <h1 className="font-bold text-lg uppercase text-green-700">characters</h1>
+      <h1 className="text-lg font-bold uppercase text-cyan-700">characters</h1>
       <ul>
         {characters?.map(
           (
             character: CharacterInfo,
           ) => (
             <li
-              className="max-w-full mx-auto py-2 cursor-pointer flex"
+              className="flex max-w-full py-2 mx-auto cursor-pointer"
               key={character.id}
             >
-              <details className="open:bg-white open:ring-1 open:ring-black/5 open:shadow-lg p-6 rounded-lg bg-green-500 w-10/12">
-                <summary className="leading-6 text-slate-900 font-bold select-none">
+              <details className="w-10/12 p-6 rounded-lg bg-cyan-500 open:bg-white open:ring-1 open:ring-black/5 open:shadow-lg">
+                <summary className="font-bold leading-6 select-none text-slate-900">
                   {character.name}
                 </summary>
 								
@@ -67,9 +68,9 @@ export default function List() {
                 </div>
               </details>
 							
-							<div className="flex flex-col text-left justify-center space-y-2 pl-2">
-								<button className="bg-blue-400 rounded-sm w-20">Edit</button>
-								<button className="bg-red-400 rounded-sm w-20" onClick={() => removeCharacter(character)}>Delete</button>
+							<div className="flex flex-col justify-center pl-2 space-y-2 text-left">
+								<Link href={`/lesson-6/${character.id}`}><button className="w-20 py-1 bg-blue-400 rounded-sm">Edit</button></Link>
+								<button className="w-20 py-1 bg-red-400 rounded-sm" onClick={() => removeCharacter(character)}>Delete</button>
 							</div>
             </li>
           ),

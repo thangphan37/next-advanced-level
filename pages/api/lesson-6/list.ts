@@ -5,10 +5,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const kamado = await prisma.character.findMany({
+  const characters = await prisma.character.findMany({
     include: {
       profile: true,
     },
   })
-  res.status(200).json(kamado)
+  res.status(200).json(characters)
 }
+

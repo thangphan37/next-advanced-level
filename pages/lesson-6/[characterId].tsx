@@ -1,47 +1,69 @@
-import Router from 'next/router'
+import * as React from 'react'
+import {useRouter} from 'next/router'
 
-export default function NewRoute() {
+export default function Character() {
+  const [character, setCharacter] = React.useState({
+    name: '',
+    createdBy: '',
+    appearance: '',
+    skill: '',
+    characterId: '',
+    height: '',
+    weight: '',
+    family: '',
+    hairColor: '',
+  })
+
+  const router = useRouter()
+
+  React.useEffect(() => {
+    if (!router.query.characterId) return
+    async function fetchCharacter() {
+      const response = await fetch(
+        `/api/lesson-6/character?id=${router.query.characterId}`,
+      )
+      const responseJson = await response.json()
+
+      setCharacter(responseJson)
+    }
+
+    fetchCharacter()
+  }, [router.query.characterId])
+
+  // change character
+  function handleChangeCharacter(event: React.ChangeEvent<HTMLInputElement>) {
+    setCharacter({
+      ...character,
+      [event.target.name]: event.target.value,
+    })
+  }
+
+  // update character
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const {
-      characterName,
-      createdBy,
-      appearance,
-      skill,
-      height,
-      weight,
-      family,
-      hairColor,
-    } = event.currentTarget
-    const submittedData = {
-      name: characterName.value,
-      createdBy: createdBy.value,
-      appearance: appearance.value,
-      skill: skill.value,
-      height: height.value,
-      weight: weight.value,
-      family: family.value,
-      hairColor: hairColor.value,
-    }
-    await fetch('/api/lesson-6/create', {
-      method: 'POST',
-      body: JSON.stringify(submittedData),
+    await fetch(`/api/lesson-6/update`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        id: router.query.characterId,
+        ...character,
+      }),
     })
-
-    Router.push(`/lesson-6/characters`)
   }
+
   return (
     <div className="max-w-sm mx-auto mt-2">
-      <h1 className="text-lg font-bold text-green-700 uppercase">
-        Add a character
+      <h1 className="text-lg font-bold text-blue-700 uppercase">
+        Update character
       </h1>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col mt-2">
           <label htmlFor="name">Name:</label>
           <input
             type="text"
-            name="characterName"
+            name="name"
             className="px-2 bg-gray-100 rounded-sm outline-none h-11"
+            value={character.name}
+            onChange={handleChangeCharacter}
           />
         </div>
 
@@ -51,6 +73,8 @@ export default function NewRoute() {
             type="text"
             name="createdBy"
             className="px-2 bg-gray-100 rounded-sm outline-none h-11"
+            value={character.createdBy}
+            onChange={handleChangeCharacter}
           />
         </div>
 
@@ -60,6 +84,8 @@ export default function NewRoute() {
             type="text"
             name="appearance"
             className="px-2 bg-gray-100 rounded-sm outline-none h-11"
+            value={character.appearance}
+            onChange={handleChangeCharacter}
           />
         </div>
 
@@ -69,6 +95,8 @@ export default function NewRoute() {
             type="text"
             name="skill"
             className="px-2 bg-gray-100 rounded-sm outline-none h-11"
+            value={character.skill}
+            onChange={handleChangeCharacter}
           />
         </div>
 
@@ -78,6 +106,8 @@ export default function NewRoute() {
             type="text"
             name="height"
             className="px-2 bg-gray-100 rounded-sm outline-none h-11"
+            value={character.height}
+            onChange={handleChangeCharacter}
           />
         </div>
 
@@ -87,6 +117,8 @@ export default function NewRoute() {
             type="text"
             name="weight"
             className="px-2 bg-gray-100 rounded-sm outline-none h-11"
+            value={character.weight}
+            onChange={handleChangeCharacter}
           />
         </div>
 
@@ -96,6 +128,8 @@ export default function NewRoute() {
             type="text"
             name="family"
             className="px-2 bg-gray-100 rounded-sm outline-none h-11"
+            value={character.family}
+            onChange={handleChangeCharacter}
           />
         </div>
 
@@ -105,15 +139,19 @@ export default function NewRoute() {
             type="text"
             name="hairColor"
             className="px-2 bg-gray-100 rounded-sm outline-none h-11"
+            value={character.hairColor}
+            onChange={handleChangeCharacter}
           />
         </div>
 
         <div className="flex flex-col mt-2">
-          <button type="submit" className="leading-10 text-white bg-green-400">
-            Add
+          <button type="submit" className="leading-10 text-white bg-blue-500">
+            Update
           </button>
         </div>
       </form>
     </div>
   )
 }
+
+;

@@ -15,7 +15,7 @@ export default async function handler(
     family,
     hairColor,
   } = JSON.parse(req.body)
-  const kamado = await prisma.character.create({
+  const character = await prisma.character.create({
     data: {
       name,
       createdBy,
@@ -31,5 +31,5 @@ export default async function handler(
       },
     },
   })
-  res.status(200).json(kamado)
+  res.status(200).json(character)
 }

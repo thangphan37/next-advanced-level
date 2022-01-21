@@ -5,10 +5,25 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const kamado = await prisma.character.findMany({
-    include: {
-      profile: true,
+  const {id, name, createdBy, appearance, skill, height, weight, family, hairColor} = JSON.parse(req.body)
+  const updatedCharacter = await prisma.character.update({
+    where: {
+      id 
     },
+    data: {
+      name,
+      createdBy,
+      appearance,
+      profile: {
+        update: {
+          skill,
+          height,
+          weight,
+          family,
+          hairColor,
+        }
+      }
+    }
   })
-  res.status(200).json(kamado)
+  res.status(200).json(updatedCharacter)
 }
