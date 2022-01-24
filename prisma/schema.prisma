@@ -28,3 +28,23 @@ model Profile {
   hairColor  String
   character Character @relation(fields: [characterId], references: [id])
 }
+
+model Reader {
+  id         String  @id @default(uuid())
+  name       String
+  age  String
+  job String
+  address String
+  hobbies String
+  books   Book[]
+}
+
+model Book {
+ id         String  @id @default(uuid()) 
+ title String
+ author String
+ type String
+ shortContent String
+ readerId String
+ reader Reader @relation(fields: [readerId], references: [id])
+}
